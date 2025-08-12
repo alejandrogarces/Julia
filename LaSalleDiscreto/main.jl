@@ -1,5 +1,5 @@
 using LinearAlgebra
-
+using Plots
 function dif_ecuacion()
     np = 20
     a = 1/2
@@ -22,6 +22,7 @@ l = 0.233
 s = 0.345
 th = 0:0.1:2*pi+0.1
 r = sqrt(l+s)
+theme(:dark)
 plot(r*sin.(th),r*cos.(th)) 
 anim = @animate for k in 1:length(gr_x[1,:])-1
     plot!([gr_x[1,k],gr_x[1,k+1]],[gr_x[2,k],gr_x[2,k+1]],marker=:circle, color=:green, xlims = (-1,1.5), ylims = (-1,0.8), legend=false)
