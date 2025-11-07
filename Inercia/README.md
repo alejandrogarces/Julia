@@ -17,7 +17,7 @@ Aumento en la inercia:
 ---
 Aumento de la inercia + aumento en el damping
 
-![](Inercia/CambioInerciayDamping.png)
+![](CambioInerciayDamping.png)
 
 ---
 ## Contacto
