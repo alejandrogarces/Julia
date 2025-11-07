@@ -63,7 +63,3 @@ p2 = plot!(p2,real.(L.values),imag.(L.values), seriestype=:scatter, label="λ(+H
 p3 = plot(p1,p2,layout=(1,2),size = (614, 400),background_color = :transparent)
 savefig("CambioInerciayDamping.png")
 display(p3)
-(+H+D+x)")
-p3 = plot(p1,p2,layout=(1,2),size = (614, 400),background_color = :transparent)
-savefig("CambioInerciayDampingeImpedancia.png")
-display(p3)
