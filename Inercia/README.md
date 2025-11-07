@@ -8,7 +8,7 @@ $\frac{d\theta}{dt} = \omega_0 \Delta \omega$
 
 ---
 Aumento en la inercia:
- [CambioInercia.png]
+![](CambioInercia.png)
 
 - Los eigenvalues se mueven a la izquierda, reducen el amortiguamiento relativo.  Desmejora desde el punto de vista de pequeña señal
 - El transitorio mejora porque la desviación de la frecuencia es menor.
@@ -16,7 +16,7 @@ Aumento en la inercia:
 ---
 Aumento de la inercia + aumento en el damping
 
-[CambioInerciayDamping]
+![](CambioInerciayDamping.png)
 
 ---
 ## Contacto
