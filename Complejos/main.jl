@@ -14,6 +14,7 @@ function PlotTransformacion(V,f)
     t = 0:0.01:1
     Vf = f.(V)
     p = plot([f(0+0im)+0im],seriestype=:scatter, label="",markersize=5)
+    p = plot!(f.(0.3*exp.(2*pi*t*1im)), linewidth=3, color=:green)
     xmax = maximum(real.(V))
     ymax = maximum(imag.(V))
     xmin = minimum(real.(V))
