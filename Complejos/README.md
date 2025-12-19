@@ -15,6 +15,8 @@ $f(z) = \exp(z)$
 
 $f(z) = z^2$
 
+![](anim_fps16.gif)
+
 ![](plot2.png)
 
 ---
