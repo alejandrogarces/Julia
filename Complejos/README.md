@@ -7,6 +7,8 @@
 
 $f(z) = \exp(z)$
 
+![](anim_fps15.gif)
+
 ![](plot.png)
 
 *Mapa 2*
