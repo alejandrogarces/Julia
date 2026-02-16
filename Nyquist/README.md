@@ -2,7 +2,7 @@
 
 $G(s) = \frac{k}{(s+p_1)(s+p_2)(s+p_3)}$
 
-![](plot14.gif)
+![](plot_14.gif)
 
 ---
 ## Contacto
