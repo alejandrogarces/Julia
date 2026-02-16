@@ -1,6 +1,6 @@
 # El criterio de Nyquist
 
-$G(s) = \frac{K}{(s+p_1)(s+p_2)(s+p_3)}$
+$G(s) = \frac{k}{(s+p_1)(s+p_2)(s+p_3)}$
 
 ![](plot14.gif)
 
