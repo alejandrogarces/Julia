@@ -9,7 +9,7 @@ Resuelve el problema de despacho de plantas termicas usando el algoritmo de dual
 Los parametros del sistema se presentan a continuacion:
 
 
-| Uni   | $a$     |  $b$    | $p_{max} |
+| Uni   | $a$     |  $b$    | $p_{max}$ |
 | ----: | ------: | ------: | --------: | 
 | 1     | 0.30494 | 38.539  |   100     | 
 | 2     | 0.21174 | 46.1591 |   100     | 
