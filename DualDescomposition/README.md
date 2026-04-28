@@ -9,16 +9,19 @@ Resuelve el problema de despacho de plantas termicas usando el algoritmo de dual
 Los parametros del sistema se presentan a continuacion:
 
 
+| Uni   | $a$     |  $b$    | $p_{max} |
+| ----: | ------: | ------: | --------: | 
+| 1     | 0.30494 | 38.539  |   100     | 
+| 2     | 0.21174 | 46.1591 |   100     | 
+| 3     | 0.07092 | 38.3055 |   200     | 
+| 4     | 0.05606 | 40.3965 |   200     | 
+| 5     | 0.03598 | 38.2704 |   300     | 
+| 6     | 0.04222 | 36.3278 |   500     | 
 
-| Uni   | a       |       b | pmax      |
-| ----: │ ------: │ ------: │ --------: │
-│ 1     │ 0.30494 │ 38.539  │   100     │
-│ 2     │ 0.21174 │ 46.1591 │   100     │
-│ 3     │ 0.07092 │ 38.3055 │   200     │
-│ 4     │ 0.05606 │ 40.3965 │   200     │
-│ 5     │ 0.03598 │ 38.2704 │   300     │
-│ 6     │ 0.04222 │ 36.3278 │   500     │
 
+Cada modelo de optimizacion tiene la siguiente forma:
+
+$p_i \leftarrow \underset{p_\text{min}\leq p_i \leq p_\text{max}}{\text{argmin}} \left\\{ \frac{a_i}{2}p_i^2 + b_ip_i + \lambda p_i \right\\}$
 
 
 
