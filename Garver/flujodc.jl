@@ -1,21 +1,17 @@
-# Modelo de transportes
+# Planeacion de la transmisión
 # alejandro.garces@utp.edu.co
-
 using LinearAlgebra
 using JuMP
 using HiGHS
-
 # Parametros
 gmax = [150;  0;360;  0;  0;600]/100
-#gmax = [50; 0; 165; 0; 0; 600]
 d = [ 80;240; 40;160;240;  0]/100
 lineas = [(1,2);(1,4);(1,5);(2,3);(2,4);(2,6);(3,5);(4,6)]
 c = [40;60;20;20;40;30;20;30]
 x = [0.4;0.6;0.2;0.2;0.4;0.3;0.2;0.3]
 fmax = [100;80;100;100;100;100;100;100]/100
 z0 = [1;1;1;1;1;0;1;0]
-
-# triplicar las lineas para adminir mas líneas por corredor
+# Adminir mas líneas por corredor
 nl = 10
 lineas=repeat(lineas,nl)
 c = repeat(c,nl)
@@ -25,16 +21,13 @@ ncor = length(z0)
 nlin = length(c)
 nnod = length(d)
 c[1:ncor] .= 0. # los corredores existentes tienen costo cero
-
-# Matriz de incidencia
-S = zeros(nnod,nlin)
+S = zeros(nnod,nlin) # Matriz de incidencia
 for (lin,conexion) in enumerate(lineas)
     k = Int(conexion[1])
     m = Int(conexion[2])
     S[k,lin] = 1
     S[m,lin] = -1
 end
-
 # Modelo de con flujo DC
 η = pi
 ModeloDC = Model(HiGHS.Optimizer)
@@ -57,12 +50,11 @@ for (k,conexion) in enumerate(lineas)
     @constraint(ModeloDC, x[k].*f[k] - (θ[i]-θ[j]) <= (1-z[k])*η )
 end
 optimize!(ModeloDC)
-
 println("Costo:", value(c'*z))
 println("Generación")
 for i = 1:nnod
     if value(g[i])>=0.1
-        println("g",i,"=",value(g[i]))
+        println("g",i,"=",round(value(g[i]),digits=2))
     end 
 end
 println("Nuevas líneas")
