@@ -5,18 +5,18 @@
 """
 
 # Instalar las librerias
+## Instalar paquekes
+paquetes = ["Plots", "LinearAlgebra", "JuMP", "DataFrames", "HiGHS"]
 using Pkg
-Pkg.add("LinearAlgebra")
-Pkg.add("Plots")
-Pkg.add("DataFrames")
-Pkg.add("JuMP")
-Pkg.add("HiGHS")
-
-using LinearAlgebra
-using DataFrames
-using JuMP
-using HiGHS
-using Plots
+for paquete in paquetes
+    if !haskey(Pkg.project().dependencies, paquete)
+        @info "Instalando $paquete..."
+        Pkg.add(paquete)
+    end
+end
+for paquete in paquetes
+	 @eval using $(Symbol(paquete))
+end
 theme(:dark)
 
 # Datos de los nodos
@@ -43,7 +43,7 @@ function GraficarRed(Nodes,Lines)
   NumN = length(Nodes.x)
   NumL = length(Lines.Bus1)
   NumS = sum(Nodes.Sub)
-  plt = scatter(Nodes.x[NumN-NumS:NumN],Nodes.y[NumN-NumS:NumN],legend=false,markersize = 16,color=:black, size=(600,600), axis=false)
+  plt = scatter(Nodes.x[NumN-NumS+1:NumN],Nodes.y[NumN-NumS+1:NumN],legend=false,markersize = 16,color=:black, size=(600,600), axis=false)
   plt = scatter!(Nodes.x,Nodes.y,legend=false,markersize = 12,color=:gray)
   for k = 1:NumL
       n1 = Lines.Bus1[k]
@@ -84,6 +84,7 @@ A=MatrizIncidencia(Lines,Nodes)
 
 # Modelo de transportes
 NumS = sum(Nodes.Sub) # Numero de subestaciones (las NumS últimas)
+NumD = sum(Nodes.Dem.>0) # Numero de nodos con demanda
 NumN = length(Nodes.x)
 NumL = length(Lines.Bus1)
 Pt = sum(Nodes.Dem)
@@ -92,18 +93,23 @@ PlanDist = Model(HiGHS.Optimizer)
 @variable(PlanDist,p[1:NumL])
 @variable(PlanDist,zN[1:NumN],Bin)
 @variable(PlanDist,zL[1:NumL],Bin)
+@variable(PlanDist,f[1:NumL]) # flujo ficticio
 @objective(PlanDist,Min,sum(Nodes.Cost.*zN)+sum(Lines.Cost.*zL))
 @constraint(PlanDist,g .<= Nodes.Sub.*zN*Pt)
 @constraint(PlanDist,p .<=  Lines.Smax.*zL)
 @constraint(PlanDist,p .>= -Lines.Smax.*zL)
 @constraint(PlanDist,g-Nodes.Dem == A*p)
 @constraint(PlanDist,sum(zL) == sum(zN)-1)
-@constraint(PlanDist,sum(zN[(NumN-NumS):NumN]) == 1) # Solo una sola subestacion
-@constraint(PlanDist, zN .<= abs.(A)*zL) # si un nodo se activa, al menos una linea adjacente se activa
+zS = [zeros(NumN-NumS,1);zN[(NumN-NumS+1):NumN]] # subestaciones
+@constraint(PlanDist,sum(zS) == 1) # Solo una sola subestacion
+#@constraint(PlanDist,NumN*zS[:]-zN[:] = A*f)
+@constraint(PlanDist,NumN*zS .- zN .>= A*f)
+@constraint(PlanDist,f .>= -(NumN-1).*zL)
+@constraint(PlanDist,f .<=  (NumN-1).*zL)
 optimize!(PlanDist)
 
 ResN = Nodes
 ResL = Lines
-ResN.On = value.(zN)
-ResL.On = value.(zL)
+ResN.On = round.(value.(zN))
+ResL.On = round.(value.(zL))
 GraficarRed(ResN,ResL)
