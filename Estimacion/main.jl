@@ -28,15 +28,13 @@ set_silent(modelo2)
 optimize!(modelo2)
 a2 = value(a2)
 b2 = value(b2)
-# Hubar-M
-alpha = 0.1
+#  Pseudo-Huber loss function 
+delta = 0.01
 modelo3 = Model(Ipopt.Optimizer)
 set_silent(modelo3)
 @variable(modelo3, a3)
 @variable(modelo3, b3)
-@variable(modelo3, s[1:n])
-@objective(modelo3,Min,sum((y.-a3*x.-s.-b3).^2)+ alpha*sum(abs.(s)))
-#@objective(modelo3,Min,sum(abs.(y.-a3*x.-b3.-s))+ alpha*sum((s).^2))
+@objective(modelo3,Min,sum([delta^2*sqrt((1+(y[k]-a3*x[k]-b3)^2/delta^2)-1) for k = 1:n]))
 optimize!(modelo3)
 a3 = value(a3)
 b3 = value(b3)
