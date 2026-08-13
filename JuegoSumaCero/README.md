@@ -1,7 +1,10 @@
 El problema de despacho puede ser interpretado como un juego de suma cero aprovechando la propiedad de punto de ensilladura del Lagrangeano, a saber:
 
-El jugador 1: minimiza en $x$ para un $\lambda$ fijo.
-El jugador 2: maximiza en $\lambda$ para un $x$ fijo
+
+- El jugador 1: minimiza en $x$ para un $\lambda$ fijo.
+- El jugador 2: maximiza en $\lambda$ para un $x$ fijo
+
+  
 ---
 ## Contacto
 
