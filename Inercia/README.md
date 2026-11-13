@@ -7,6 +7,12 @@ $2H \frac{d\omega}{dt} = p_m - \frac{1}{x}\sin(\theta) - \xi \Delta \omega$
 $\frac{d\theta}{dt} = \omega_0 \Delta \omega$
 
 ---
+
+![Cambio en la inercia y el damping](ScreenDamping.gif)
+
+
+---
+
 Aumento en la inercia:
 
 ![](CambioInercia.png)
